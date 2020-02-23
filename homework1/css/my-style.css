@@ -1,0 +1,25 @@
+#canvas{
+	border:2px solid blue;
+}
+
+.options-container {
+	width: 10%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.options-container > * {
+	display: block;
+}
+
+h3 {
+	font-size: 16px;
+}
+
+.slider label {
+	vertical-align: top;
+}
+
+.slider input {
+	width: 85%;
+}
