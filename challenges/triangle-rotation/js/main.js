@@ -8,13 +8,23 @@ var play;
 var ccw;
 var rotAbout;
 
+function setVertexValues() {
+	const x0 = parseFloat(document.getElementById("text-x0").value);
+	const y0 = parseFloat(document.getElementById("text-y0").value);
+
+	const x1 = parseFloat(document.getElementById("text-x1").value);
+	const y1 = parseFloat(document.getElementById("text-y1").value);
+
+	const x2 = parseFloat(document.getElementById("text-x2").value);
+	const y2 = parseFloat(document.getElementById("text-y2").value);
+
+	vertices = [x0, y0, 0., x1, y1, 0., x2, y2, 0.];
+}
+
 function init()
 {
 	// Init Scene
-	vertices = [0., 0.5, 0.,	// X0, y0, z0
-			   -0.5, -0.5, 0.,
-			    0.5, -0.5, 0.
-			    ];
+	setVertexValues();
 
 	indices =[0, 1, 2];
 
@@ -91,6 +101,8 @@ function render()
 	if (play) {
 
 		theta += ccw ? deltaTheta : -deltaTheta;
+		theta = theta % (360. * Math.PI / 180.);
+		document.getElementById("lab-theta-msg").innerHTML = (theta * 180. / Math.PI).toFixed(2);
 		const uModelMatrixLocation = gl.getUniformLocation(shaderProgram, "uModelMatrix");
 		let modelMatrix = glMatrix.mat4.create(); // mModel = I
 		

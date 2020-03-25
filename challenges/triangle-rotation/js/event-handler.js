@@ -1,7 +1,12 @@
 // Ok Button Event
 function okButtonClickEventListener(event)
 {
-	document.getElementById("p-msg").innerHTML = "ok Button Click!";
+	setVertexValues();
+
+	var data = new Float32Array(vertices);
+	var usage = gl.STATIC_DRAW;
+	var bufferType = gl.ARRAY_BUFFER;
+	gl.bufferData(bufferType, data, usage);
 }
 
 // Play Button Event
@@ -13,19 +18,49 @@ function playButtonClickEventListener(event)
 // pause Button Event
 function pauseButtonClickEventListener(event)
 {
-	document.getElementById("p-msg").innerHTML = "pause Button Click!";
+	play = false;
 }
 
 //  home Button Event
 function homeButtonClickEventListener(event)
 {
-	document.getElementById("p-msg").innerHTML = "home Button Click!";
+	theta = 0;
 }
 
 //  reset Button Event
 function resetButtonClickEventListener(event)
 {
-	document.getElementById("p-msg").innerHTML = "render Button Click!";
+	theta = 0;
+	deltaTheta = 5. * Math.PI / 180;
+	play = false;
+	ccw = true;
+	rotAbout = "ORIGEN";
+	document.getElementById("text-x0").value = 0;
+	document.getElementById("text-y0").value = 0.5;
+
+	document.getElementById("text-x1").value = -0.5;
+	document.getElementById("text-y1").value = -0.5;
+
+	document.getElementById("text-x2").value = 0.5;
+	document.getElementById("text-y2").value = -0.5;
+
+	setVertexValues();
+
+	var data = new Float32Array(vertices);
+	var usage = gl.STATIC_DRAW;
+	var bufferType = gl.ARRAY_BUFFER;
+	gl.bufferData(bufferType, data, usage);
+
+	document.getElementById("radio-ccw").checked = true;
+	document.getElementById("radio-origin").checked = true;
+	document.getElementById("lab-theta-msg").innerHTML = 0;
+	document.getElementById("text-xq").value = 0;
+	document.getElementById("text-yq").value = 0;
+	document.getElementById("range-speed").value = 5;
+
+	const uModelMatrixLocation = gl.getUniformLocation(shaderProgram, "uModelMatrix");
+	const modelMatrix = glMatrix.mat4.create();
+	gl.uniformMatrix4fv(uModelMatrixLocation, false, modelMatrix);
 }
 
 // Speed Slider Event
