@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>Triangle's Rotation Challenge</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/my-style.css">
+		<script src="js/lib/my-shaders-lib.js" type="text/javascript"></script>
+		<script src="js/lib/gl-matrix-min.js" type="text/javascript"></script>
+		<script src="js/event-handler.js" type="text/javascript"></script>
+		<script src="js/main.js" type="text/javascript"></script>
+	</head>
+
+	<body onload="main();">
+		<h1>Triangle's Rotation Challenge</h1>
+		<div class="container">
+  			<div style="float: left;">
+  				<hr>
+  				<div>
+  					<b>Triangle's Vertices:</b>
+					<br>
+					x0:<input id="text-x0" type="text" value="0" size="5" style="text-align:right;">
+					y0:<input id="text-y0" type="text" value="0.5" size="5" style="text-align:right;">
+					<br>
+					x1:<input id="text-x1" type="text" value="-0.5" size="5" style="text-align:right;">
+					y1:<input id="text-y1" type="text" value="-0.5" size="5" style="text-align:right;">
+					<br>
+					x2:<input id="text-x2" type="text" value="0.5" size="5" style="text-align:right;">
+					y2:<input id="text-y2" type="text" value="-0.5" size="5" style="text-align:right;">
+					<br><br>
+					<button id="button-ok">Ok</button>
+				</div>
+				<hr>
+            	<div>
+					<b>Rotation Direction:</b>
+					<table>
+						<tr> 
+					    	<td>
+					    		<form action="">
+						  			<input id="radio-ccw" type="radio" name="rotation-direction" value="CCW" checked> CCW <br>
+						  			<input id="radio-cw" type="radio" name="rotation-direction" value="CW"> CW <br>
+								</form>
+					    	</td>
+					    </tr>
+					</table>
+					<hr>
+				</div>
+				<div>
+					<b>Rotation About:</b>
+					<table>
+						<tr> 
+					    	<td>
+					    		<form action="">
+						  			<input id="radio-origin" type="radio" name="rotation-direction" value="Origin" checked> Origin <br>
+						  			<input id="radio-centroid" type="radio" name="rotation-direction" value="Centroid"> Centroid <br>
+						  			<input id="radio-q" type="radio" name="rotation-direction" value="Q"> Q <br>
+								</form>
+					    	</td>
+					    </tr>
+					</table>
+					<div>
+						xq:<input id="text-xq" type="text" value="0" size="5" style="text-align:right;">
+						yq:<input id="text-yq" type="text" value="0" size="5" style="text-align:right;">
+					</div>
+					<hr>
+				</div>
+				<div>
+					<b>Rotation Speed:</b>
+					<br>
+					DeltaTheta (deg):
+					<input type="range" id="range-speed" min="1" max="10" value="5">
+					<br> 
+					<label id="lab-deltaTheta-msg">5</label>
+					<hr>
+				</div>
+				<div>
+					<b>Current Rotation Angle:</b>
+					<br>
+					Theta (deg):<label id="lab-theta-msg">0</label>
+					<hr>
+				</div>
+				<div>
+					<b>Rotation Controls:</b>
+					<br>
+					<button id="button-play">PLAY</button>
+					<button id="button-pause">PAUSE</button>
+					<button id="button-home">HOME</button>
+					<button id="button-reset">RESET</button>
+				</div>
+  			</div>
+  			<div style="float: center;">
+                <canvas id="canvas" width="500" height="500"></canvas>
+                <p>Instructions: Use PLAY Button to Rotate the Triangle! Use RESET Button to Restart All!</p>
+                <p id="p-msg"></p>
+            </div>
+		</div>
+	</body>
+
+	<!-- Vertex Shader Program -->
+	<script id="vertexShader" type="x-shader/x-vertex">
+		attribute vec3 aPosition;
+		uniform mat4 uModelMatrix;
+		void main()
+		{
+			gl_Position = uModelMatrix *  vec4(aPosition, 1.); // P' = Model * P
+			gl_PointSize = 5.;
+		}
+	</script>
+
+	<!-- Fragment Shader Program -->
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		precision mediump float;	// fragment shaders don't have a default precision
+		void main()
+		{
+			gl_FragColor = vec4(1., 1., 1., 1.);
+		}
+	</script>
+	
+</html>
