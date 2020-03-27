@@ -25,6 +25,10 @@ function pauseButtonClickEventListener(event)
 function homeButtonClickEventListener(event)
 {
 	theta = 0;
+	document.getElementById("lab-theta-msg").innerHTML = 0;
+	const uModelMatrixLocation = gl.getUniformLocation(shaderProgram, "uModelMatrix");
+	const modelMatrix = glMatrix.mat4.create();
+	gl.uniformMatrix4fv(uModelMatrixLocation, false, modelMatrix);
 }
 
 //  reset Button Event
