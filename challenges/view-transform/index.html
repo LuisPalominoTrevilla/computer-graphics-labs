@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>Triangle's Rotation Challenge</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/my-style.css">
+		<script src="js/lib/my-shaders-lib.js" type="text/javascript"></script>
+		<script src="js/lib/gl-matrix-min.js" type="text/javascript"></script>
+		<script src="js/event-handler.js" type="text/javascript"></script>
+		<script src="js/main.js" type="text/javascript"></script>
+	</head>
+
+	<body onload="main();">
+		<h1>Triangle's Model & Camera Transformation Challenge</h1>
+		<div class="container">
+  			<div style="float: left;">
+  				<hr>
+  				<b>Model Rotation</b>
+  				<hr>
+            	<div>
+					<b>Rot Direction:</b>
+					<table>
+						<tr> 
+					    	<td>
+					    		<form action="">
+						  			<input id="radio-ccw-model" type="radio" name="rot-direction" value="CCW" checked> CCW <br>
+						  			<input id="radio-cw-model" type="radio" name="rot-direction" value="CW"> CW <br>
+								</form>
+					    	</td>
+					    </tr>
+					</table>					
+				</div>
+				<div>
+					<b>Rot Speed:</b>
+					<input type="range" id="range-rot-speed-model" min="1" max="10" value="5">
+					<div>
+					<label id="label-range-rot-speed-model">5</label>
+					</div>
+				</div>
+				<div>
+					<b>Model Rotation Controls:</b>
+					<br>
+					<button id="button-play-model">PLAY</button>
+					<button id="button-pause-model">PAUSE</button>
+					<button id="button-home-model">HOME</button>
+				</div>
+				<hr>
+				<b>Camera Panning & Rotation</b>
+				<hr>
+				<b>Panning:</b>
+				<div>
+					<b>X-Pan:</b>
+					<input type="range" id="range-panX" min="-10" max="10" value="0">
+					<div>
+					<label id="label-panX">0</label>
+					</div>
+					<b>Y-Pan:</b>
+					<input type="range" id="range-panY" min="-10" max="10" value="0">
+					<div>
+					<label id="label-panY">0</label>
+					</div>
+				</div>
+            	<div>
+					<b>Rot Direction:</b>
+					<table>
+						<tr> 
+					    	<td>
+					    		<form action="">
+						  			<input id="radio-ccw-camera" type="radio" name="rot-direction" value="CCW" checked> CCW <br>
+						  			<input id="radio-cw-camera" type="radio" name="rot-direction" value="CW"> CW <br>
+								</form>
+					    	</td>
+					    </tr>
+					</table>
+					
+				</div>
+				<div>
+					<b>Rot Speed:</b>
+					<input type="range" id="range-rot-speed-camera" min="1" max="10" value="5">
+					<div>
+					<label id="label-range-rot-speed-camera">5</label>
+					</div>
+				</div>
+				<div>
+					<b>Camera Rotation Controls:</b>
+					<br>
+					<button id="button-play-camera">PLAY</button>
+					<button id="button-pause-camera">PAUSE</button>
+					<button id="button-home-camera">HOME</button>
+				</div>
+				<hr>
+  			</div>
+  			<div style="float: center;">
+                <canvas id="canvas" width="500" height="500"></canvas>
+                <p>Instructions: Use Moel & Camera Controls to control the Model & Camera respectivelly</p>
+                <p id="label-msg"></p>
+            </div>
+		</div>
+	</body>
+
+	<!-- Vertex Shader Program -->
+	<script id="vertexShader" type="x-shader/x-vertex">
+		attribute vec3 aPosition;
+		uniform mat4 uModelMatrix, uCameraMatrix;
+		void main()
+		{
+			gl_Position = uCameraMatrix * uModelMatrix * vec4(aPosition, 1.);	// P´= MCamera Mmodel P
+			gl_PointSize = 5.;
+		}
+	</script>
+
+	<!-- Fragment Shader Program -->
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		precision mediump float;	// fragment shaders don't have a default precision
+		void main()
+		{
+			gl_FragColor = vec4(1., 1., 1., 1.);
+		}
+	</script>
+	
+</html>
