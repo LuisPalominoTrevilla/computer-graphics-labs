@@ -1,0 +1,13 @@
+#canvas{
+	border:2px solid blue;
+}
+h1 {
+	font-family: 'Coming Soon', cursive;
+	font-size: 80;
+}
+table {
+	width: -webkit-fill-available;
+}
+td {
+	width: 70px;
+}
