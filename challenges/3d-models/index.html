@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>Auto Focus Challenge</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/my-style.css">
+		<script src="js/lib/gl-matrix-min.js" type="text/javascript"></script>
+		<script src="js/lib/my-shaders-lib.js" type="text/javascript"></script>
+		<script src="js/lib/my-lib.js" type="text/javascript"></script>
+		<script src="js/event-handler.js" type="text/javascript"></script>
+		<script src="js/main.js" type="text/javascript"></script>
+	</head>
+
+	<body onload="main();">
+		<h1>Hello World 3D Models</h1> 
+		<div class="container">
+  			<div style="float: left;">
+  				<b>Select a Model:</b>
+  				<div>
+  					<input id="radio-model-pyramid" type="radio" name="magnitud-order" value="01x" checked>Pyramid<br>
+					<input id="radio-model-cube" type="radio" name="magnitud-order" value="1x" >Cube<br>
+					<input id="radio-model-little-house" type="radio" name="magnitud-order" value="10x">Little House<br>
+  				</div>
+				<hr>
+				<b>Camera's Parameters:</b>
+				<div>
+					<table>
+					  <tr>
+					    <th></th>
+					    <th align="center">X</th>
+					    <th align="center">Y</th>
+					    <th align="center">Z</th>
+					  </tr>
+					  <tr>
+					  	<td><b>Eye:</b></td>
+					    <td align="center"><label id="label-xEye">0.0</label></td>
+					    <td align="center"><label id="label-yEye">0.0</label></td>
+					    <td align="center"><label id="label-zEye">1.0</label></td>
+					  </tr>
+					  <tr>
+					  	<td><b>Target:</b></td>
+					    <td align="center"><label id="label-xTarget">0.0</label></td>
+					    <td align="center"><label id="label-yTarget">0.0</label></td>
+					    <td align="center"><label id="label-zTarget">0.0</label></td>
+					  </tr>
+					  <tr>
+					  	<td><b>Up:</b></td>
+					    <td align="center"><label id="label-xUp">0.0</label></td>
+					    <td align="center"><label id="label-yUp">1.0</label></td>
+					    <td align="center"><label id="label-zUp">0.0</label></td>
+					  </tr>
+					</table>
+				</div>
+				<hr>
+				<b>Camera's Orbit Speed: </b><label id="label-range-orbit-speed">1</label>
+				<br>
+				<br>
+				<div>
+					<input type="range" id="range-orbit-speed" min="1" max="10" value="1"><br>
+					
+				</div>
+  			</div>
+  			<div style="float: center;">
+                <canvas id="canvas" width="500" height="500"></canvas>
+                <p>Instructions: Select a 3D model, the control the camera's orbit speed!</p>
+                <label id="label-msg" />
+            </div>
+	</body>
+
+	<!-- Vertex Shader Program -->
+	<script id="vertexShader" type="x-shader/x-vertex">
+		attribute vec3 aPosition;
+		uniform mat4 uModelMatrix;
+		uniform mat4 uCameraMatrix;
+		uniform mat4 uProjMatrix;
+		void main()
+		{
+			gl_Position = uProjMatrix*uCameraMatrix*uModelMatrix*vec4(aPosition, 1.); // P' = Mproj Mcamera Mmodel P
+			gl_PointSize = 5.;
+		}
+	</script>
+
+	<!-- Fragment Shader Program -->
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		precision mediump float;	// fragment shaders don't have a default precision
+		void main()
+		{
+			gl_FragColor = vec4(1., 1., 1., 1.);
+		}
+	</script>
+	
+</html>
