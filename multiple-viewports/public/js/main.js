@@ -194,8 +194,8 @@ function render() {
 
     var cameraMatrix = glMatrix.mat4.create(); // M-camera = I
     glMatrix.mat4.lookAt(cameraMatrix, eye, target, up);
-    glMatrix.mat4.rotate(cameraMatrix, cameraMatrix, rotX, [1, 0, 0]);
-    glMatrix.mat4.rotate(cameraMatrix, cameraMatrix, rotY, [0, 1, 0]);
+    // glMatrix.mat4.rotate(cameraMatrix, cameraMatrix, rotX, [1, 0, 0]);
+    // glMatrix.mat4.rotate(cameraMatrix, cameraMatrix, rotY, [0, 1, 0]);
     var uCameraMatrixLocation = gl.getUniformLocation(
       shaderProgram,
       "uCameraMatrix"
