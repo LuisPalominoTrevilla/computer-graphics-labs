@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Parametric Challenge</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/my-style.css" />
+    <script src="js/lib/gl-matrix-min.js" type="text/javascript"></script>
+    <script src="js/lib/my-shaders-lib.js" type="text/javascript"></script>
+    <script src="js/lib/my-lib.js" type="text/javascript"></script>
+    <script src="js/event-handler.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+
+    <style>
+      .values > * {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body onload="main();">
+    <div style="float: center;">
+      <div>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <div style="display: inline-block; vertical-align: top; margin-left: 3rem;">
+          <div class="values" id="values-circle">
+            <b>Circle Values:</b>
+            <div>
+              <label for="circle-radius">r:</label>
+              <input id="circle-radius" type="number" value="1"/>
+            </div>
+            <div>
+              <label for="circle-points">Points:</label>
+              <input id="circle-points" type="number" value="100"/>
+            </div>
+            <button id="circle-ok">OK</button>
+          </div>
+          <div class="values" id="values-ellipse" style="display: none;">
+            <b>Ellipse Values:</b>
+            <div>
+              <label for="ellipse-a">a:</label>
+              <input id="ellipse-a" type="number" value="1"/>
+            </div>
+            <div>
+              <label for="ellipse-b">b:</label>
+              <input id="ellipse-b" type="number" value=".5"/>
+            </div>
+            <div>
+              <label for="ellipse-points">Points:</label>
+              <input id="ellipse-points" type="number" value="100"/>
+            </div>
+            <button id="ellipse-ok">OK</button>
+          </div>
+          <div class="values" id="values-cycloid" style="display: none;">
+            <b>Cycloid Values:</b>
+            <div>
+              <label for="cycloid-a">a:</label>
+              <input id="cycloid-a" type="number" value=".2"/>
+            </div>
+            <div>
+              <label for="cycloid-period">Period:</label>
+              <input id="cycloid-period" type="number" value="4"/>
+            </div>
+            <div>
+              <label for="cycloid-points">Points:</label>
+              <input id="cycloid-points" type="number" value="100"/>
+            </div>
+            <button id="cycloid-ok">OK</button>
+          </div>
+          <div class="values" id="values-hypocycloid" style="display: none;">
+            <b>HypoCycloid Values:</b>
+            <div>
+              <label for="hypocycloid-a">a:</label>
+              <input id="hypocycloid-a" type="number" value="1"/>
+            </div>
+            <div>
+              <label for="hypocycloid-points">Points:</label>
+              <input id="hypocycloid-points" type="number" value="100"/>
+            </div>
+            <button id="hypocycloid-ok">OK</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <b>Select a Model:</b>
+        <input
+          id="radio-circle"
+          type="radio"
+          name="radio-parametric"
+          value="circle"
+          checked
+        >Circle</input>
+        <input
+          id="radio-ellipse"
+          type="radio"
+          name="radio-parametric"
+          value="ellipse"
+        >Ellipse</input>
+        <input
+          id="radio-cycloid"
+          type="radio"
+          name="radio-parametric"
+          value="cycloid"
+        >Cycloid</input>
+        <input
+          id="radio-hypocycloid"
+          type="radio"
+          name="radio-parametric"
+          value="hypocicloid"
+        >Hypocycloid</input>
+      </div>
+      <div>
+        <b>Drag Mode:</b>
+        <input
+          id="radio-rotate"
+          type="radio"
+          name="radio-drag"
+          checked
+        >Rotate</input>
+        <input
+          id="radio-zoom"
+          name="radio-drag"
+          type="radio"
+        >Zoom</input>
+      </div>
+    </div>
+  </body>
+
+  <!-- Vertex Shader Program -->
+  <script id="vertexShader" type="x-shader/x-vertex">
+    attribute vec3 aPosition;
+    uniform mat4 uModelMatrix;
+    uniform mat4 uCameraMatrix;
+    uniform mat4 uProjMatrix;
+    void main()
+    {
+    	gl_Position = uProjMatrix*uCameraMatrix*uModelMatrix*vec4(aPosition, 1.); // P' = Mproj Mcamera Mmodel P
+    	gl_PointSize = 5.;
+    }
+  </script>
+
+  <!-- Fragment Shader Program -->
+  <script id="fragmentShader" type="x-shader/x-fragment">
+    precision mediump float;	// fragment shaders don't have a default precision
+    void main()
+    {
+    	gl_FragColor = vec4(1., 1., 1., 1.);
+    }
+  </script>
+</html>
