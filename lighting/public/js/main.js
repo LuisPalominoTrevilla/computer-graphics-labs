@@ -38,7 +38,7 @@ class SquareGeometry extends THREE.Geometry {
     this.faces.push(face1);
     this.faces.push(face2);
     // Normals
-    // this.computeFaceNormals();
+    this.computeFaceNormals();
     // Texture Coords
     var tc0 = new THREE.Vector2(0, 1);
     var tc1 = new THREE.Vector2(0, 0);
@@ -58,6 +58,8 @@ function main() {
   renderer = new THREE.WebGLRenderer({ canvas: canvas });
   renderer.setSize(canvas.width, canvas.height);
   renderer.setClearColor("black");
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.BasicShadowMap;
 
   // MODELS
   cube1 = new THREE.Mesh(
@@ -104,14 +106,14 @@ function main() {
 
   // LIGHTS
   var ambientLight = new THREE.AmbientLight("white", 0.5);
-  var directionalLight = new THREE.DirectionalLight("white", 5);
+  var directionalLight = new THREE.DirectionalLight("white", 1);
   directionalLight.position.set(0, 1.8, 5);
-  directionalLight.target = cube3;
+  directionalLight.target = square;
   directionalLight.castShadow = true;
 
-  var spotlight = new THREE.SpotLight("white", 1, 0, Math.PI / 10, 0, 1);
-  spotlight.position.set(0, 10, 0);
-  spotlight.target = square;
+  var spotLight = new THREE.SpotLight("white", 1, 0, Math.PI / 14, 0, 1);
+  spotLight.position.set(0, 10, 0);
+  spotLight.target = square;
 
   // CAMERAS
   camera = new THREE.PerspectiveCamera(
@@ -135,7 +137,7 @@ function main() {
   scene.add(cube4);
   //scene.add(ambientLight);
   scene.add(directionalLight);
-  //scene.add(spotlight);
+  //scene.add(spotLight);
 
   // EVENT-HANDLERS
   window.addEventListener("resize", windowEventListener, false);
@@ -154,9 +156,6 @@ function update() {
 
 function renderLoop() {
   renderer.render(scene, camera);
-  // Add shadows
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.BasicShadorMap;
   update();
   requestAnimationFrame(renderLoop);
 }
